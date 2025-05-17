@@ -1,0 +1,62 @@
+class Empleado:
+    def __init__(self, nombre, salario_base, dias_trabajados):
+        self.nombre = nombre
+        self.salario_base = float(salario_base)
+
+        # Validar que los días trabajados no superen 30
+        if not (0 <= dias_trabajados <= 30):
+            raise ValueError("Los días trabajados deben estar entre 0 y 30.")
+        self.dias_trabajados = dias_trabajados
+
+        self.bonificaciones = []
+        self.deducciones = []
+
+    def agregar_bonificacion(self, monto):
+        if monto < 0:
+            raise ValueError("La bonificación debe ser un valor positivo.")
+        self.bonificaciones.append(monto)
+
+    def agregar_deduccion(self, monto):
+        if monto < 0:
+            raise ValueError("La deducción debe ser un valor positivo.")
+        self.deducciones.append(monto)
+
+    def calcular_salario_final(self):
+        salario_proporcional = (self.salario_base * self.dias_trabajados) / 30
+        total_bonificaciones = sum(self.bonificaciones)
+        total_deducciones = sum(self.deducciones)
+        return salario_proporcional + total_bonificaciones - total_deducciones
+
+    def mostrar_info(self):
+        print(f"Empleado: {self.nombre}")
+        print(f"Salario final: ${self.calcular_salario_final():.2f}")
+        print("-------------------------------")
+
+
+# Crear empleados y registrar información
+try:
+    emp1 = Empleado("Andrea", 1500.0, 30)
+    emp1.agregar_bonificacion(100)
+    emp1.agregar_bonificacion(50)
+    emp1.agregar_deduccion(25)
+
+    emp2 = Empleado("Luis", 2000.0, 28)
+    emp2.agregar_bonificacion(200)
+    emp2.agregar_deduccion(50)
+    emp2.agregar_deduccion(30)
+
+    emp3 = Empleado("María", 1800.0, 26)
+    emp3.agregar_bonificacion(150)
+    emp3.agregar_deduccion(60)
+
+    # Mostrar resultados
+    emp1.mostrar_info()
+    emp2.mostrar_info()
+    emp3.mostrar_info()
+
+except Exception as e:
+    print("Error:", e)
+
+
+
+# fin
